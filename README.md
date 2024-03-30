@@ -41,7 +41,7 @@ The following sequence of commands will remove and recreate the "${HOME}/src/lib
 CARDANO_NODE_VERSION='8.9.1'; \
 IOHKNIX_COMMIT="$(curl https://raw.githubusercontent.com/IntersectMBO/cardano-node/$CARDANO_NODE_VERSION/flake.lock | jq -r '.nodes.iohkNix.locked.rev')"; \
 echo "iohk-nix commit: $IOHKNIX_COMMIT"; \
-SODIUM_COMMIT="$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_COMMIT/flake.lock | jq -r '.nodes.sodium.original.rev')"; \
+SODIUM_COMMIT="$(curl https://raw.githubusercontent.com/IntersectMBO/iohk-nix/$IOHKNIX_COMMIT/flake.lock | jq -r '.nodes.sodium.original.rev')"; \
 echo "Using sodium commit: $SODIUM_COMMIT"; \
 
 # Use same numeric libsodium version number as Debian stable
@@ -53,11 +53,16 @@ mkdir -p "${basedir}"; \
 cd "${basedir}"; \
 rm -rf "${package}-${version}"; \
 
-git clone https://github.com/input-output-hk/libsodium "${package}-${version}"; \
+# libsodium source
+git clone https://github.com/IntersectMBO/libsodium "${package}-${version}"; \
 cd "${package}-${version}"; \
 git checkout "${SODIUM_COMMIT}"; \
+
+# deb packages build instructions
 git clone "https://github.com/TerminadaPool/libsodium-iog-debian.git" debian; \
 unset CARDANO_NODE_VERSION IOHKNIX_COMMIT SODIUM_COMMIT version package basedir; \
+
+# build deb packages
 debuild -us -uc -b;
 ```
 
