@@ -1,0 +1,10 @@
+.debhelper/
+autoreconf.after
+autoreconf.before
+debhelper-build-stamp
+libsodium-dev-iog/
+libsodium23-iog/
+tmp/
+files
+libsodium-dev-iog.substvars
+libsodium23-iog.substvars
