@@ -75,9 +75,9 @@ Put these files in your own local debian repository and install them on every ma
 See: 'control' file for where this is configured.
 
 Expect to see the following lintian errors at the end of the build process:  
-> E: libsodium-dev-iog: no-copyright-file
-> E: libsodium23-iog: no-copyright-file
-> W: libsodium23-iog: package-name-doesnt-match-sonames libsodium23
+> E: libsodium-dev-iog: no-copyright-file  
+> E: libsodium23-iog: no-copyright-file  
+> W: libsodium23-iog: package-name-doesnt-match-sonames libsodium23  
 
 
 ### References
