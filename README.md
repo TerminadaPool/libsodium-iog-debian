@@ -41,7 +41,7 @@ The following sequence of commands will remove and recreate the "${HOME}/src/lib
 CARDANO_NODE_VERSION='8.9.1'; \
 IOHKNIX_COMMIT="$(curl https://raw.githubusercontent.com/IntersectMBO/cardano-node/$CARDANO_NODE_VERSION/flake.lock | jq -r '.nodes.iohkNix.locked.rev')"; \
 echo "iohk-nix commit: $IOHKNIX_COMMIT"; \
-SODIUM_COMMIT="$(curl https://raw.githubusercontent.com/IntersectMBO/iohk-nix/$IOHKNIX_COMMIT/flake.lock | jq -r '.nodes.sodium.original.rev')"; \
+SODIUM_COMMIT="$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_COMMIT/flake.lock | jq -r '.nodes.sodium.original.rev')"; \
 echo "Using sodium commit: $SODIUM_COMMIT"; \
 
 # Use same numeric libsodium version number as Debian stable
