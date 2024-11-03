@@ -1,0 +1,49 @@
+Source: libsodium-iog
+Section: libs
+Priority: optional
+Maintainer: builder <builder@terminada.io>
+Build-Depends: debhelper-compat (= 13), autotools-dev
+Standards-Version: 4.5.1
+Vcs-Git: git://github.com/input-output-hk/libsodium
+Vcs-Browser: https://github.com/input-output-hk/libsodium
+Homepage: https://www.libsodium.org/
+Rules-Requires-Root: no
+
+Package: libsodium23-iog
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Conflicts: libsodium23
+Replaces: libsodium23
+Provides: libsodium23 (= 1.0.18)
+Multi-Arch: same
+Description: Network communication, cryptography and signaturing library
+ NaCl (pronounced "salt") is a new easy-to-use high-speed software library for
+ network communication, encryption, decryption, signatures, etc.
+ .
+ NaCl's goal is to provide all of the core operations needed to build
+ higher-level cryptographic tools.
+ .
+ Sodium is a portable, cross-compilable, installable, packageable fork of NaCl,
+ with a compatible API.
+
+Package: libsodium-dev-iog
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, libsodium23-iog (= ${binary:Version})
+Conflicts: libsodium-dev
+Replaces: libsodium-dev
+Provides: libsodium-dev (= 1.0.18)
+Multi-Arch: same
+Description: Network communication, cryptography and signaturing library - headers
+ NaCl (pronounced "salt") is a new easy-to-use high-speed software library for
+ network communication, encryption, decryption, signatures, etc.
+ .
+ NaCl's goal is to provide all of the core operations needed to build
+ higher-level cryptographic tools.
+ .
+ Sodium is a portable, cross-compilable, installable, packageable fork of NaCl,
+ with a compatible API.
+ .
+ This package provides development headers needed for applications that use
+ libsodium.
