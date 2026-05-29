@@ -22,14 +22,14 @@ sudo apt install build-essential fakeroot devscripts debhelper autoconf-archive 
 
 Optionally install llvm and set cc and c++ to use clang
 ```
-sudo apt install llvm clang; \
-sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100; \
+sudo apt install llvm clang
+sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
 sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 ```
 Ubuntu users might need to skip the previous optional step if their Ubuntu version of clang doesn't support optimization flag '-ffat-lto-objects'.  Revert the previous changes with:
 ```
-sudo apt purge llvm clang; \
-sudo apt autoremove;
+sudo apt purge llvm clang
+sudo apt autoremove
 ```
 
 Switch to your builder account
@@ -45,36 +45,36 @@ See: [cardano-node-debian](/debian/cardano-node-debian)
 
 IOG specified SODIUM_COMMIT depends on CARDANO_NODE_VERSION.  This will set the value to the latest version released for mainnet:
 ```
-CARDANO_NODE_VERSION="$(curl -s https://api.github.com/repos/intersectMBO/cardano-node/releases/latest | jq -r .tag_name)"; \
-echo "Latest CARDANO_NODE_VERSION is: ${CARDANO_NODE_VERSION}";
+CARDANO_NODE_VERSION="$(curl -s https://api.github.com/repos/intersectMBO/cardano-node/releases/latest | jq -r .tag_name)"
+echo "Latest CARDANO_NODE_VERSION is: ${CARDANO_NODE_VERSION}"
 ```
 
 The following sequence of commands will remove and recreate the "${HOME}/src/libsodium-iog" directory.  Familiarise yourself with the following commands before running them.  You can simply copy and paste the entire list of commands below into a bash terminal to run them in sequence once you have set the CARDANO_NODE_VERSION variable.
 ```
-deb_build_instructions_repo='https://github.com/TerminadaPool/libsodium-iog-debian.git'; \
+deb_build_instructions_repo='https://github.com/TerminadaPool/libsodium-iog-debian.git'
 
-IOHKNIX_VERSION=$(curl https://raw.githubusercontent.com/IntersectMBO/cardano-node/$CARDANO_NODE_VERSION/flake.lock | jq -r '.nodes.iohkNix.locked.rev'); \
-echo "iohk-nix version: $IOHKNIX_VERSION"; \
-SODIUM_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_VERSION/flake.lock | jq -r '.nodes.sodium.original.rev'); \
-echo "Using sodium version: $SODIUM_VERSION"; \
+IOHKNIX_VERSION=$(curl https://raw.githubusercontent.com/IntersectMBO/cardano-node/$CARDANO_NODE_VERSION/flake.lock | jq -r '.nodes.iohkNix.locked.rev')
+echo "iohk-nix version: $IOHKNIX_VERSION"
+SODIUM_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_VERSION/flake.lock | jq -r '.nodes.sodium.original.rev')
+echo "Using sodium version: $SODIUM_VERSION"
 
-version='1.0.18' # Same version number as in Debian stable; \
-package='libsodium-iog'; \
-basedir="${HOME}/src/${package}"; \
+version='1.0.18' # Same version as in Debian stable
+package='libsodium-iog'
+basedir="${HOME}/src/${package}"
 
-mkdir -p "${basedir}"; \
-cd "${basedir}"; \
-rm -rf "${package}-${version}"; \
+mkdir -p "${basedir}"
+cd "${basedir}"
+rm -rf "${package}-${version}"
 
-git clone https://github.com/IntersectMBO/libsodium "${package}-${version}"; \
-cd "${package}-${version}"; \
-git checkout "$SODIUM_VERSION"; \
+git clone https://github.com/IntersectMBO/libsodium "${package}-${version}"
+cd "${package}-${version}"
+git checkout "$SODIUM_VERSION"
 
-git clone "${deb_build_instructions_repo}" debian; \
+git clone "${deb_build_instructions_repo}" debian
 
-debuild -us -uc -b; \
+DEB_BUILD_OPTIONS="noautodbgsym" debuild -us -uc -b
 
-unset deb_build_instructions_repo IOHKNIX_VERSION SODIUM_VERSION version package basedir;
+unset deb_build_instructions_repo IOHKNIX_VERSION SODIUM_VERSION version package basedir
 ```
 
 Your debs will be produced in the parent directory: "${HOME}/src/libsodium-iog/".  They will be named something like:  
@@ -98,4 +98,3 @@ Expect to see the following lintian errors at the end of the build process:
 
 ### References
 See: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md
-

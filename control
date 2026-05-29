@@ -17,7 +17,8 @@ Conflicts: libsodium23
 Replaces: libsodium23
 Provides: libsodium23 (= 1.0.18)
 Multi-Arch: same
-Description: Network communication, cryptography and signaturing library
+Description: libsodium stable release (IOHK patched)
+ Network communication, cryptography and signaturing library
  NaCl (pronounced "salt") is a new easy-to-use high-speed software library for
  network communication, encryption, decryption, signatures, etc.
  .
@@ -35,7 +36,8 @@ Conflicts: libsodium-dev
 Replaces: libsodium-dev
 Provides: libsodium-dev (= 1.0.18)
 Multi-Arch: same
-Description: Network communication, cryptography and signaturing library - headers
+Description: libsodium stable release (IOHK patched)
+ Network communication, cryptography and signaturing library - headers
  NaCl (pronounced "salt") is a new easy-to-use high-speed software library for
  network communication, encryption, decryption, signatures, etc.
  .

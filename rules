@@ -5,5 +5,18 @@ export DH_VERBOSE = 1
 #export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+COMMIT_HASH := $(shell git rev-parse HEAD 2>/dev/null || echo "unknown")
+
+# Override dh_auto_configure to inject commit hash BEFORE running configure
+override_dh_auto_configure:
+	@if [ "$(COMMIT_HASH)" != "unknown" ]; then \
+		echo "Patching debian/control with commit $(COMMIT_HASH)..."; \
+		sed -i '/^Description:/a\ This package built from commit: ${COMMIT_HASH}' debian/control; \
+	else \
+		echo "Warning: Git commit hash not obtained."; \
+	fi
+	# Run standard configure
+	dh_auto_configure
+
 %:
 	dh $@ --with autoreconf -Bbuild
